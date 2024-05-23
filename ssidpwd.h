@@ -5,8 +5,8 @@
 *  17/05/2024
 */
 // Comencem amb la definició de les característiques de cada WiFi
-const char* ssid1 = "ADAMO-CE6A";
-const char* password1 = "L7YWGPRVXGQLAM";
+const char* ssid1 = "CASA";
+const char* password1 = "xxxx";
 const char* ip1 = "192.168.1.15";
 const char* gw1 = "192.168.1.1";
 const char* msk1 = "255.255.255.0";
@@ -14,15 +14,15 @@ const char* dns1_1 = "8.8.8.8";
 const char* dns2_1 = "8.8.4.4";
 
 const char* ssid2 = "CursosTAV";
-const char* password2 = "F3ntiD3sfent";
+const char* password2 = "xxxx";
 const char* ip2 = "192.168.107.245";
 const char* gw2 = "192.168.107.1";
 const char* msk2 = "255.255.255.0";
 const char* dns1_2 = "8.8.8.8";
 const char* dns2_2 = "8.8.4.4";
 
-const char* ssid3 = "AjVilablareix";
-const char* password3 = "S0mUnAjuntament";
+const char* ssid3 = "AJUNTAMENT";
+const char* password3 = "xxxx";
 const char* ip3 = "192.168.1.245";
 const char* gw3 = "192.168.1.1";
 const char* msk3 = "255.255.255.0";
