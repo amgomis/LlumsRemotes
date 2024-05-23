@@ -1,10 +1,7 @@
 #define debug
-#define multiwifi
 
-#ifdef multiwifi
-#include <WiFiMulti.h>
-#endif
 #include <WiFi.h>
+#include <ESPmDNS.h>
 #include <WebServer.h>
 #include <Adafruit_NeoPixel.h>
 
@@ -15,10 +12,6 @@
 
 #include "index.h"
 #include "ssidpwd.h"
-
-#ifdef multiwifi
- WiFiMulti wifiMulti;
-#endif
 
 WebServer server(80);
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(nleds, PIN, NEO_GRB + NEO_KHZ800);
@@ -285,38 +278,16 @@ void setup() {
   delay(100);
   pixels.setBrightness(nivell); // Brillantor inicial a 1/5 part (màxim = 255)
   pixels.show();  // Envia pixels
-#ifdef multiwifi
-  Serial.println("");
-  Serial.println("");
-  Serial.println("\nMulti WiFi");
-  Serial.println("");
-  // WiFi en mode estació
-  WiFi.mode(WIFI_STA);
-  // Register multi WiFi networks
-  wifiMulti.addAP(ssid1, password1);
-  wifiMulti.addAP(ssid2, password2);
-  wifiMulti.addAP(ssid3, password3);
-  wifiMulti.addAP(ssid4, password4);
-  // Connexió WiFi
-  if (wifiMulti.run(connectTimeoutMs) == WL_CONNECTED) {
-    Serial.print("WiFi connectada a ");
-    Serial.print(WiFi.SSID());
-    Serial.print(" amb IP = ");
-    Serial.println(WiFi.localIP());
-  } else {
-    Serial.println("WiFi no connectada!");
-  }
 
-#else
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println("Conectant a la WiFi...");
+  wifiSetup();
+
+  if (!MDNS.begin("gruart")) {
+    Serial.println("Error inicialtzant mDNS...");
+    return;
   }
-  Serial.print("Connectat a la WiFi");
-  Serial.print(" amb IP : ");
-  Serial.println(WiFi.localIP());
-#endif
+  Serial.println("mDNS iniciat com a gruart.local");
+  MDNS.addService("http", "tcp", 80);
+
   // rutines web
   server.on("/", HTTP_GET, handleRoot);
   server.on("/button", HTTP_GET, handleButton);
